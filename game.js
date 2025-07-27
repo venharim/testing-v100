@@ -174,4 +174,145 @@ return;
 const event = gameState.storyQueue[gameState.currentStoryIndex];
 
 if (event.type === 'function') {
-e
+event.func();
+} else {
+addEvent(event.type, event.text);
+}
+
+gameState.currentStoryIndex++;
+updateStoryStatus();
+
+if (gameState.isKillerMode && gameState.killerPlayer && !gameState.movieComplete) {
+const aliveVictims = gameState.characters.filter(c =>
+c.status === 'Alive' && c.id !== gameState.killerPlayer.id
+);
+if (aliveVictims.length > 0) {
+if (Math.random() < 0.3) {
+setTimeout(() => {
+showKillerActions();
+document.getElementById('force-killer-action').style.display = 'inline-block';
+document.getElementById('killer-help-text').style.display = 'block';
+updateStoryStatus();
+}, 1000);
+return;
+}
+}
+}
+
+if (gameState.autoPlay && gameState.currentStoryIndex < gameState.storyQueue.length) {
+setTimeout(() => playNextStoryEvent(), event.delay || 2000);
+}
+}
+
+function toggleAutoplay() {
+gameState.autoPlay = !gameState.autoPlay;
+createBeep(600, 0.05);
+updateMovieControls();
+updateStoryStatus();
+if (gameState.autoPlay && !gameState.movieComplete) {
+playNextStoryEvent();
+}
+}
+
+function skipToEnd() {
+createBeep(400, 0.1);
+while (gameState.currentStoryIndex < gameState.storyQueue.length) {
+const event = gameState.storyQueue[gameState.currentStoryIndex];
+if (event.type === 'function') {
+event.func();
+} else {
+addEvent(event.type, event.text);
+}
+gameState.currentStoryIndex++;
+}
+
+if (gameState.currentAct === 1) {
+endAct1();
+skipAct2();
+skipAct3();
+} else if (gameState.currentAct === 2) {
+endAct2();
+skipAct3();
+} else if (gameState.currentAct === 3) {
+gameState.movieComplete = true;
+}
+
+updateMovieControls();
+updateStoryStatus();
+}
+
+function skipAct2() {
+gameState.currentAct = 2;
+updateProgress();
+addEvent('title', '🎬 ACT 2 - THE BODY COUNT RISES 🎬');
+generateEdgicRatings(1);
+
+const aliveCount = gameState.characters.filter(c => c.status === 'Alive').length;
+const killsNeeded = Math.floor(aliveCount * 0.4);
+for (let i = 0; i < killsNeeded; i++) {
+performRandomKill();
+}
+endAct2();
+}
+
+function skipAct3() {
+gameState.currentAct = 3;
+updateProgress();
+addEvent('title', '🎬 ACT 3 - THE FINAL CONFRONTATION 🎬');
+generateEdgicRatings(2);
+revealKiller();
+finalConfrontation();
+gameState.movieComplete = true;
+}
+
+function viewResults() {
+createBeep(600, 0.1);
+showResults();
+}
+
+function resetSimulator() {
+createBeep(400, 0.1);
+gameState = {
+characters: [],
+killers: [],
+gameMode: 'spectator',
+currentAct: 1,
+movieTitle: '',
+movieYear: new Date().getFullYear(),
+events: [],
+isKillerMode: false,
+killerPlayer: null,
+autoPlay: false,
+movieComplete: false,
+storyQueue: [],
+currentStoryIndex: 0,
+relationships: new Map()
+};
+
+franchiseHistory = {
+movies: [],
+allCharacters: new Map()
+};
+
+document.getElementById('results-screen').classList.add('hidden');
+document.getElementById('movie-screen').classList.add('hidden');
+document.getElementById('setup-screen').classList.remove('hidden');
+document.getElementById('cast-customization').classList.add('hidden');
+
+const relationshipSetup = document.getElementById('relationship-setup');
+if (relationshipSetup) {
+relationshipSetup.remove();
+}
+
+document.getElementById('movie-title').value = '';
+document.getElementById('movie-year').value = new Date().getFullYear();
+document.getElementById('game-mode').value = 'spectator';
+document.getElementById('cast-size').value = '8';
+document.getElementById('killer-count').value = 'random';
+document.getElementById('movie-log').innerHTML = '';
+
+const existingFranchiseTable = document.querySelector('.franchise-history');
+if (existingFranchiseTable) {
+existingFranchiseTable.remove();
+}
+}

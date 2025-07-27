@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Slasher Movie Simulator</title>
-  <!-- Link external stylesheet -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -23,7 +22,15 @@
       <button id="toggle-music" onclick="toggleMusic()">🎵 Music</button>
       <br />
       <label style="color: #fff; font-size: 11px;">Volume:</label>
-      <input class="volume-slider" id="master-volume" max="100" min="0" onchange="setMasterVolume(this.value)" type="range" value="30" />
+      <input
+        class="volume-slider"
+        id="master-volume"
+        max="100"
+        min="0"
+        onchange="setMasterVolume(this.value)"
+        type="range"
+        value="30"
+      />
     </div>
   </div>
 
@@ -32,8 +39,10 @@
       <h1>💀 SLASHER MOVIE SIMULATOR 💀</h1>
       <div class="subtitle">Inspired by the Slasher genre</div>
       <div class="tagline">The killer is among us...</div>
-      <div style="background: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 8px; margin-top: 15px; border: 2px solid #4CAF50;">
-        <span style="color: #4CAF50; font-weight: bold; font-size: 1.1rem;">🔗 NOW WITH RELATIONSHIP SYSTEM!</span>
+      <div style="background: rgba(76, 175, 80, 0.2); padding: 10px; border-radius: 8px; margin-top: 15px; border: 2px solid #4caf50;">
+        <span style="color: #4caf50; font-weight: bold; font-size: 1.1rem;">
+          🔗 NOW WITH RELATIONSHIP SYSTEM!
+        </span>
         <div style="color: #ccc; font-size: 0.9rem; margin-top: 5px;">
           Define romantic couples, best friends, enemies &amp; family bonds that affect survival!
         </div>
@@ -46,11 +55,22 @@
         <h2>Movie Setup</h2>
         <div class="form-group">
           <label for="movie-title">Movie Title</label>
-          <input id="movie-title" placeholder="Enter your horror movie title..." type="text" />
+          <input
+            id="movie-title"
+            placeholder="Enter your horror movie title..."
+            type="text"
+          />
         </div>
         <div class="form-group">
           <label for="movie-year">Release Year</label>
-          <input id="movie-year" max="2030" min="1970" placeholder="2025" type="number" value="2025" />
+          <input
+            id="movie-year"
+            max="2030"
+            min="1970"
+            placeholder="2025"
+            type="number"
+            value="2025"
+          />
         </div>
         <div class="form-group">
           <label for="game-mode">Game Mode</label>
@@ -78,20 +98,53 @@
             <option value="3">3 Killers</option>
           </select>
         </div>
-        <button class="btn" id="create-cast-btn" onclick="setupCast()">Create Cast</button>
-        <button class="btn btn-secondary" onclick="alert('Test button works!')" style="margin-left: 10px;">Test Button</button>
-        <button class="btn" onclick="testRelationshipSystem()" style="margin-left: 10px; background: #4CAF50;">🔗 Test Relationships</button>
+        <button class="btn" id="create-cast-btn" onclick="setupCast()">
+          Create Cast
+        </button>
+        <button
+          class="btn btn-secondary"
+          onclick="alert('Test button works!')"
+          style="margin-left: 10px"
+        >
+          Test Button
+        </button>
+        <button
+          class="btn"
+          onclick="testRelationshipSystem()"
+          style="margin-left: 10px; background: #4caf50"
+        >
+          🔗 Test Relationships
+        </button>
       </div>
 
       <div class="section hidden" id="cast-customization">
         <h2>Cast Customization</h2>
-        <div style="background: rgba(76, 175, 80, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 2px solid #4CAF50;">
-          <h3 style="color: #4CAF50; margin-bottom: 10px;">🔗 NEW: Relationship System Available!</h3>
+        <div style="background: rgba(76, 175, 80, 0.1); padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 2px solid #4caf50;">
+          <h3 style="color: #4caf50; margin-bottom: 10px;">
+            🔗 NEW: Relationship System Available!
+          </h3>
           <p style="color: #ccc; margin: 0;">
             After customizing your characters, you can define relationships between them (romantic couples, best friends, enemies, etc.) that will affect the story, survival chances, and dialogue!
           </p>
         </div>
         <div class="cast-grid" id="cast-container"></div>
+      </div>
+    </div>
+
+    <!-- Relationship Setup Screen -->
+    <div class="hidden" id="relationship-setup">
+      <h2>Relationship Setup</h2>
+      <p style="color: #ccc; margin-bottom: 20px;">
+        Define relationships between characters. These will affect survival chances, dialogue, and story events!
+      </p>
+      <div style="margin-bottom: 20px;">
+        <button class="btn" onclick="generateRandomRelationships()">🎲 Generate Random Relationships</button>
+        <button class="btn btn-secondary" onclick="clearAllRelationships()">🧹 Clear All</button>
+      </div>
+      <div id="relationship-pairs" style="display: grid; gap: 15px; margin-bottom: 20px;"></div>
+      <div style="text-align: center;">
+        <button class="btn" onclick="finishRelationshipSetup()">Continue to Movie</button>
+        <button class="btn btn-secondary" onclick="backToCastCustomization()">Back to Cast</button>
       </div>
     </div>
 
@@ -166,13 +219,19 @@
             <tbody id="edgic-tbody"></tbody>
           </table>
         </div>
+        <div class="franchise-history-container">
+          <h3>Franchise History</h3>
+          <table class="final-table" id="franchise-history-table">
+            <!-- Dynamic franchise history rows and columns inserted here -->
+          </table>
+        </div>
         <button class="btn" onclick="createSequel()">Create Sequel</button>
         <button class="btn btn-secondary" onclick="resetSimulator()">Create New Horror</button>
       </div>
     </div>
   </div>
 
-  <!-- Link JS files -->
+  <!-- External JS scripts -->
   <script src="data.js"></script>
   <script src="relationships.js"></script>
   <script src="audio.js"></script>

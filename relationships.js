@@ -1,48 +1,48 @@
 // === relationships.js ===
-// Manages relationships between characters affecting survival, loyalty, and story events.
+// Manages relationships between characters affecting survival chances, loyalty, and story events.
 
-// Relationship types in order to cycle through
+// Ordered list of relationship types for cycling
 const relationshipTypesOrder = [
   "ROMANTIC",
   "BEST_FRIENDS",
   "FAMILY",
   "ENEMIES",
   "EX_LOVERS",
-  "NEUTRAL",
+  "NEUTRAL"
 ];
 
-// Emojis for relationship types
+// Icons/emojis for relationship types
 const relationshipTypeIcons = {
   ROMANTIC: "💕",
   BEST_FRIENDS: "👥",
   FAMILY: "👪",
   ENEMIES: "⚔️",
   EX_LOVERS: "💔",
-  NEUTRAL: "🤝",
+  NEUTRAL: "🤝"
 };
 
-// Store relationships as key strings "id1_id2" => type
+// Object storing current relationships with keys like "id1_id2"
 let relationships = {};
 
-// Create or update relationship between two character IDs
+// Create or update a relationship between two character IDs
 function createRelationship(char1, char2, type) {
-  if (char1 === char2) return;
+  if (char1 === char2) return; // No self-relationships
   const key = getRelationshipKey(char1, char2);
   relationships[key] = type;
 }
 
-// Generate consistent key for two IDs (sorted)
+// Generate a consistent key for two character IDs (sorted)
 function getRelationshipKey(char1, char2) {
   return [char1, char2].sort().join("_");
 }
 
-// Retrieve relationship type between two characters
+// Get the relationship type between two characters
 function getRelationship(char1, char2) {
   const key = getRelationshipKey(char1, char2);
   return relationships[key] || "NEUTRAL";
 }
 
-// Cycle relationship type between two characters
+// Cycle the relationship type between two characters through the available types
 function cycleRelationship(char1, char2) {
   const currentType = getRelationship(char1, char2);
   const currentIndex = relationshipTypesOrder.indexOf(currentType);
@@ -51,12 +51,12 @@ function cycleRelationship(char1, char2) {
   renderRelationshipPairs();
 }
 
-// Render UI for relationship pairs
+// Render the relationship pairs UI on the relationship setup screen
 function renderRelationshipPairs() {
   const container = document.getElementById("relationship-pairs");
-  container.innerHTML = "";
+  container.innerHTML = ""; // Clear current UI
 
-  const cast = window.gameState.cast;
+  const cast = window.gameState.cast; // Global cast array
   for (let i = 0; i < cast.length; i++) {
     for (let j = i + 1; j < cast.length; j++) {
       const char1 = cast[i];
@@ -73,13 +73,13 @@ function renderRelationshipPairs() {
   }
 }
 
-// Clear all relationships
+// Clear all relationships and re-render UI
 function clearAllRelationships() {
   relationships = {};
   renderRelationshipPairs();
 }
 
-// Generate random relationships for all pairs
+// Generate random relationships for all character pairs
 function generateRandomRelationships() {
   const cast = window.gameState.cast;
   relationships = {};
@@ -92,20 +92,20 @@ function generateRandomRelationships() {
   renderRelationshipPairs();
 }
 
-// Proceed to movie screen from relationship setup
+// Finalize relationship setup and move on to the movie screen
 function finishRelationshipSetup() {
   document.getElementById("setup-screen").classList.add("hidden");
   document.getElementById("movie-screen").classList.remove("hidden");
   startMovie();
 }
 
-// Back button to cast customization
+// Go back to cast customization screen from relationship setup
 function backToCastCustomization() {
   document.getElementById("cast-customization").classList.remove("hidden");
   document.getElementById("relationship-setup").classList.add("hidden");
 }
 
-// Debugging: log relationships
+// Debug helper to test current relationships
 function testRelationshipSystem() {
   console.log("Current Relationships:", relationships);
   alert("Relationship system tested - check console for details.");

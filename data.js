@@ -1,148 +1,63 @@
-// === data.js ===
-
-// Full archetypes array with detailed stats and descriptions
-const archetypes = [
-  {
-    name: "The Final Girl",
-    description: "Pure-hearted and resourceful, destined to survive",
-    stats: { survival: 9, intelligence: 8, social: 6, athletics: 7, stealth: 6, luck: 8 }
-  },
-  {
-    name: "The Flirt",
-    description: "Seductive but often meets a grisly end",
-    stats: { survival: 3, intelligence: 5, social: 9, athletics: 6, stealth: 4, luck: 4 }
-  },
-  {
-    name: "The Jock",
-    description: "Strong and athletic but often overconfident",
-    stats: { survival: 5, intelligence: 4, social: 7, athletics: 9, stealth: 3, luck: 5 }
-  },
-  {
-    name: "The Nerd",
-    description: "Intelligent but physically weak and vulnerable",
-    stats: { survival: 6, intelligence: 9, social: 3, athletics: 2, stealth: 7, luck: 6 }
-  },
-  {
-    name: "The Stoner",
-    description: "Laid-back and oblivious to danger",
-    stats: { survival: 2, intelligence: 3, social: 6, athletics: 4, stealth: 5, luck: 3 }
-  },
-  {
-    name: "The Rich Girl",
-    description: "Entitled and pampered, easy target",
-    stats: { survival: 2, intelligence: 5, social: 8, athletics: 3, stealth: 2, luck: 7 }
-  },
-  {
-    name: "The Bad Boy",
-    description: "Rebellious with a dark past",
-    stats: { survival: 6, intelligence: 6, social: 7, athletics: 8, stealth: 8, luck: 4 }
-  },
-  {
-    name: "The Innocent",
-    description: "Pure and naive, tugs at heartstrings",
-    stats: { survival: 4, intelligence: 6, social: 8, athletics: 4, stealth: 3, luck: 8 }
-  },
-  {
-    name: "The Outcast",
-    description: "Mysterious loner with secrets",
-    stats: { survival: 7, intelligence: 8, social: 2, athletics: 5, stealth: 9, luck: 5 }
-  },
-  {
-    name: "The Party Girl",
-    description: "Lives for fun and excitement",
-    stats: { survival: 3, intelligence: 4, social: 9, athletics: 6, stealth: 3, luck: 5 }
-  },
-  {
-    name: "The Skeptic",
-    description: "Doesn't believe in the supernatural",
-    stats: { survival: 5, intelligence: 8, social: 5, athletics: 6, stealth: 6, luck: 4 }
-  },
-  {
-    name: "The Hero",
-    description: "Brave protector of others",
-    stats: { survival: 7, intelligence: 7, social: 8, athletics: 8, stealth: 5, luck: 6 }
-  },
-  {
-    name: "The Coward",
-    description: "First to run, sometimes survives",
-    stats: { survival: 6, intelligence: 6, social: 4, athletics: 7, stealth: 8, luck: 8 }
-  },
-  {
-    name: "The Goth",
-    description: "Dark-humored, witty, and enigmaticly unbothered",
-    stats: { survival: 8, intelligence: 8, social: 4, athletics: 2, stealth: 9, luck: 5 }
-  },
-  {
-    name: "The Tomboy",
-    description: "Tough and independent",
-    stats: { survival: 7, intelligence: 7, social: 5, athletics: 8, stealth: 7, luck: 6 }
-  },
-  {
-    name: "The Drama Queen",
-    description: "Attention-seeking and dramatic",
-    stats: { survival: 3, intelligence: 5, social: 8, athletics: 4, stealth: 2, luck: 4 }
-  },
-  {
-    name: "The Boyfriend",
-    description: "Devoted partner, often protective",
-    stats: { survival: 5, intelligence: 6, social: 7, athletics: 7, stealth: 5, luck: 5 }
-  },
-  {
-    name: "The Best Friend",
-    description: "Loyal companion to the protagonist",
-    stats: { survival: 6, intelligence: 7, social: 9, athletics: 5, stealth: 6, luck: 6 }
-  },
-  {
-    name: "The Reporter",
-    description: "Investigative journalist seeking the truth",
-    stats: { survival: 6, intelligence: 8, social: 8, athletics: 5, stealth: 6, luck: 5 }
-  },
-  {
-    name: "The Horror Fanatic",
-    description: "Knows all the rules but may be overconfident",
-    stats: { survival: 7, intelligence: 7, social: 6, athletics: 5, stealth: 6, luck: 4 }
-  }
-];
-
-// Full names list for random selection
+// original lines 466-485
 const names = [
-  "Emma", "Liam", "Olivia", "Noah", "Ava", "Ethan", "Sophia", "Mason", "Isabella", "William",
-  "Mia", "James", "Charlotte", "Benjamin", "Amelia", "Lucas", "Harper", "Henry", "Evelyn", "Alexander",
-  "Abigail", "Michael", "Emily", "Elijah", "Elizabeth", "Daniel", "Mila", "Matthew", "Ella", "Jackson",
-  "Madison", "David", "Scarlett", "Sebastian", "Victoria", "Joseph", "Aria", "Samuel", "Grace", "John",
-  "Chloe", "Owen", "Camila", "Wyatt", "Penelope", "Jack", "Riley", "Luke", "Layla", "Jayden",
-  "Luna", "Dylan", "Zoe", "Gabriel", "Nora", "Aiden", "Lily", "Anthony", "Hannah", "Isaac",
-  "Addison", "Grayson", "Ellie", "Andrew", "Zoey", "Christopher", "Stella", "Joshua", "Natalie", "Jaxon",
-  "Leah", "Julian", "Hazel", "Nathan", "Violet", "Aaron", "Aurora", "Lincoln", "Savannah", "Christian",
-  "Audrey", "Hunter", "Brooklyn", "Cameron", "Bella", "Connor", "Claire", "Eli", "Skylar", "Ezra",
-  "Lucy", "Thomas", "Paisley", "Charles", "Everly", "Caleb", "Anna", "Isaiah", "Caroline", "Ryan",
-  "Nova", "Adrian", "Genesis", "Nolan", "Kennedy", "Jeremiah", "Samantha", "Easton", "Aaliyah", "Ezekiel",
-  "Cora", "Colton", "Ruby", "Brayden", "Eva", "Jordan", "Serenity", "Angel", "Autumn", "Roman",
-  "Alice", "Austin", "Hailey", "Dominic", "Gianna", "Adam", "Sadie", "Xavier", "Quinn", "Jose",
-  "Nevaeh", "Jace", "Piper", "Levi", "Kinsley", "Jonathan", "Clara", "Christopher", "Rylee",
-  "Mckenzie", "Finn", "Rebecca", "Rhett", "Brooklynn", "Zion", "Dakota", "Bennett", "Anastasia", "Kaleb",
-  "Alaina", "Joel", "Phoebe", "Grant", "Rachel", "Ryder", "Angela", "Emiliano", "Tessa", "Alan",
-  "Leila", "Victor", "Daisy", "Abel", "Elise", "Matteo", "Lucia", "Nicolas", "Genevieve", "Archer",
-  "Alayna", "Jasper", "Camille", "Maddox", "Thea", "Knox", "Freya", "Malachi", "Amaya", "Zayden",
-  "Ruth", "Erick", "Selena", "Jude", "Adelyn", "Pedro", "Charlee", "Spencer", "Journee", "Tristan",
-  "Harmony", "Messiah", "Annabelle", "Manuel", "Arabella", "Karter", "Fiona", "Cody", "Nina", "Paxton",
-  "Brynlee", "Lane", "Kate", "Phoenix", "Laila", "Remington", "Jayla", "Brantley", "Kayla", "Bryson",
-  "Alani", "Sergio", "Adrianna", "Colt", "Ember", "Troy", "Dakota", "Ricardo", "Talia", "Zane",
-  "Miranda", "Francisco", "Catalina", "Kyrie", "Heidi", "Shane", "Daniella", "Seth", "Veronica",
-  "Marshall", "Marley", "Wade", "Giselle", "Jett", "Malia", "Andy", "Annie", "Desmond", "Gwendolyn",
-  "Ali", "Joy", "Edwin", "Helen", "Tobias", "Lucille", "Armando", "Yaretzi", "Gage", "Angelina",
-  "Edgar", "Amira", "Cohen", "Evangeline", "Niko", "Francesca", "Fabian", "April", "Ari", "Julianna",
-  "Corbin", "Esmeralda", "Koa", "Laura", "Saul", "Mira", "Zander", "Daphne", "Omari", "Lana",
-  "Reid", "Ophelia", "Kian", "Cecilia", "Derek", "Adelaide", "Cash", "Nylah", "Kellan", "Elliott",
-  "Moses", "Winter", "Reed", "Celeste", "Finley", "Lara", "Figgy", "Feng", "Forrest"
+'Emma', 'Liam', 'Olivia', 'Noah', 'Ava', 'Ethan', 'Sophia', 'Mason', 'Isabella', 'William',
+'Mia', 'James', 'Charlotte', 'Benjamin', 'Amelia', 'Lucas', 'Harper', 'Henry', 'Evelyn', 'Alexander',
+'Abigail', 'Michael', 'Emily', 'Elijah', 'Elizabeth', 'Daniel', 'Mila', 'Matthew', 'Ella', 'Jackson',
+'Madison', 'David', 'Scarlett', 'Sebastian', 'Victoria', 'Joseph', 'Aria', 'Samuel', 'Grace', 'John',
+'Chloe', 'Owen', 'Camila', 'Wyatt', 'Penelope', 'Jack', 'Riley', 'Luke', 'Layla', 'Jayden',
+'Luna', 'Dylan', 'Zoe', 'Gabriel', 'Nora', 'Aiden', 'Lily', 'Anthony', 'Hannah', 'Isaac',
+'Addison', 'Grayson', 'Ellie', 'Andrew', 'Zoey', 'Christopher', 'Stella', 'Joshua', 'Natalie', 'Jaxon',
+'Leah', 'Julian', 'Hazel', 'Nathan', 'Violet', 'Aaron', 'Aurora', 'Lincoln', 'Savannah', 'Christian',
+'Audrey', 'Hunter', 'Brooklyn', 'Cameron', 'Bella', 'Connor', 'Claire', 'Eli', 'Skylar', 'Ezra',
+'Lucy', 'Thomas', 'Paisley', 'Charles', 'Everly', 'Caleb', 'Anna', 'Isaiah', 'Caroline', 'Ryan',
+'Nova', 'Adrian', 'Genesis', 'Nolan', 'Kennedy', 'Jeremiah', 'Samantha', 'Easton', 'Aaliyah', 'Ezekiel',
+'Cora', 'Colton', 'Ruby', 'Brayden', 'Eva', 'Jordan', 'Serenity', 'Angel', 'Autumn', 'Roman',
+'Alice', 'Austin', 'Hailey', 'Dominic', 'Gianna', 'Adam', 'Sadie', 'Xavier', 'Quinn', 'Jose',
+'Nevaeh', 'Jace', 'Piper', 'Levi', 'Kinsley', 'Jonathan', 'Clara', 'Christopher', 'Rylee', 'Hudson',
+'Athena', 'Robert', 'Melanie', 'Ian', 'Naomi', 'Carson', 'Eliza', 'Axel', 'Isla', 'Miles',
+'Josephine', 'Jason', 'Lyla', 'Declan', 'Katherine', 'Brandon', 'Brielle', 'Weston', 'Arya', 'Justin',
+'Ivy', 'Parker', 'Jade', 'Luis', 'Rose', 'Diego', 'Maria', 'Greyson', 'Liliana', 'Kevin',
+'Margaret', 'Zachary', 'Adeline', 'Tyler', 'Raelynn', 'Bentley', 'Melody', 'Brody', 'Julia', 'Max',
+'Maya', 'Juan', 'Valentina', 'Kaiden', 'Reagan', 'Asher', 'Lilly', 'Carlos', 'Ashley', 'Micah',
+'Athena', 'Vincent', 'Ariana', 'George', 'Elena', 'Maverick', 'Sophie', 'Giovanni', 'Brianna', 'Maxwell',
+'Juliette', 'Kingston', 'Alexandra', 'Jayce', 'Harmony', 'Kayden', 'Blakely', 'Ayden', 'Isabel', 'Rowan',
+'Faith', 'Braxton', 'Andrea', 'Ryker', 'Londyn', 'Ivan', 'Makayla', 'Beau', 'Emery', 'Camden',
+'Adalynn', 'Sawyer', 'Jocelyn', 'Harrison', 'Nicole', 'Gavin', 'Vivienne', 'Leonardo', 'Lena', 'Emmett',
+'Gabriella', 'Kailey', 'Tucker', 'Alina', 'August', 'Mckenzie', 'Finn', 'Rebecca', 'Rhett', 'Brooklynn',
+'Zion', 'Dakota', 'Bennett', 'Anastasia', 'Kaleb', 'Alaina', 'Joel', 'Phoebe', 'Grant', 'Rachel',
+'Ryder', 'Angela', 'Emiliano', 'Tessa', 'Alan', 'Leila', 'Victor', 'Daisy', 'Abel', 'Elise',
+'Matteo', 'Lucia', 'Nicolas', 'Genevieve', 'Archer', 'Alayna', 'Jasper', 'Camille', 'Maddox', 'Thea',
+'Knox', 'Freya', 'Malachi', 'Amaya', 'Zayden', 'Ruth', 'Erick', 'Selena', 'Jude', 'Adelyn',
+'Pedro', 'Charlee', 'Spencer', 'Journee', 'Tristan', 'Harmony', 'Messiah', 'Annabelle', 'Manuel', 'Arabella',
+'Karter', 'Fiona', 'Cody', 'Nina', 'Paxton', 'Brynlee', 'Lane', 'Kate', 'Phoenix', 'Laila',
+'Remington', 'Jayla', 'Brantley', 'Kayla', 'Bryson', 'Alani', 'Sergio', 'Adrianna', 'Colt', 'Ember',
+'Troy', 'Dakota', 'Ricardo', 'Talia', 'Zane', 'Miranda', 'Francisco', 'Catalina', 'Kyrie', 'Heidi',
+'Shane', 'Daniella', 'Seth', 'Veronica', 'Marshall', 'Marley', 'Wade', 'Giselle', 'Jett', 'Malia',
+'Andy', 'Annie', 'Desmond', 'Gwendolyn', 'Ali', 'Joy', 'Edwin', 'Helen', 'Tobias', 'Lucille',
+'Armando', 'Yaretzi', 'Gage', 'Angelina', 'Edgar', 'Amira', 'Cohen', 'Evangeline', 'Niko', 'Francesca',
+'Fabian', 'April', 'Ari', 'Julianna', 'Corbin', 'Esmeralda', 'Koa', 'Laura', 'Saul', 'Mira',
+'Zander', 'Daphne', 'Omari', 'Lana', 'Reid', 'Ophelia', 'Kian', 'Cecilia', 'Derek', 'Adelaide',
+'Cash', 'Nylah', 'Kellan', 'Elliott', 'Moses', 'Winter', 'Reed', 'Celeste', 'Finley', 'Lara', 'Figgy', 'Feng', 'Forrest'
 ];
 
-// Relationship types constants
-const relationshipTypes = {
-  ROMANTIC: { name: "Romantic Couple", emoji: "💕", survivalBonus: 2, loyaltyBonus: 3 },
-  BEST_FRIENDS: { name: "Best Friends", emoji: "👥", survivalBonus: 1, loyaltyBonus: 2 },
-  FAMILY: { name: "Family", emoji: "👪", survivalBonus: 2, loyaltyBonus: 3 },
-  ENEMIES: { name: "Enemies", emoji: "⚔️", survivalBonus: -1, loyaltyBonus: -2 },
-  EX_LOVERS: { name: "Ex-Lovers", emoji: "💔", survivalBonus: -1, loyaltyBonus: -1 },
-  NEUTRAL: { name: "Neutral", emoji: "🤝", survivalBonus: 0, loyaltyBonus: 0 }
+let gameState = {
+characters: [],
+killers: [],
+gameMode: 'spectator',
+currentAct: 1,
+movieTitle: '',
+movieYear: new Date().getFullYear(),
+events: [],
+isKillerMode: false,
+killerPlayer: null,
+autoPlay: false,
+movieComplete: false,
+storyQueue: [],
+currentStoryIndex: 0,
+relationships: new Map()
+};
+
+let franchiseHistory = {
+movies: [],
+allCharacters: new Map()
 };
